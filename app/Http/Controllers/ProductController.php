@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
+use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 
 class ProductController extends Controller
@@ -17,7 +19,8 @@ class ProductController extends Controller
     public function index()
     {
         //
-        return json_encode(Product::all());
+        // return json_encode(Product::all());
+        return ProductResource::collection(Product::paginate(5));
     }
 
     /**

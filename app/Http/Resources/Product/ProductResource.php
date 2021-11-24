@@ -12,6 +12,8 @@ class ProductResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+    public $preserveKeys = true;
+
     public function toArray($request)
     {
         return [
@@ -22,8 +24,16 @@ class ProductResource extends JsonResource
             'discount' => $this->discount,
             'rating' => $this->reviews->count() > 0 ? round($this->reviews->sum('star')/$this->reviews->count(), 2) : 'No Rating',
             'href' => [
-                'reviews' => route('reviews.index', $this->id)
-            ]
+                'link' => route('products.show', $this->id),
+                
+            ],
+
+            'reviews' => [
+                'review' => route('reviews.index', $this->id)
+                
+            ],
+
+
         ];
     }
 }

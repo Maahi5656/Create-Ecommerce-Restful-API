@@ -14,6 +14,13 @@ class ProductCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+
+        return [
+            'data' => $this->collection,
+            'name' => $this->name,
+            'netPrice' => round($this->price - ($this->price*($this->discount/100)),2),
+            'rating' => $this->reviews > 0 ? round($this->reviews->sum('star')/$this->reviews->count(), 2) : 'No Reviews',
+        ];
     }  
 }
